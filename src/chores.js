@@ -1,22 +1,72 @@
 const CATEGORIES = [
   {
-    id: 1,
+    id: 'morning-chores',
     label: 'Morning Chores',
-    chores: [
-      { id: 1, label: 'Make the bed' },
-      { id: 2, label: 'Wash the dishes' },
-      { id: 3, label: 'Take out the trash' },
-      { id: 4, label: 'Clean Desk' },
-      { id: 4, label: 'Remove floor clutter ' },
+    dailyTasks: [
+      { label: 'Make the bed', emoji: '🛏️' },
+      { label: 'Wash the dishes', emoji: '🍽️' },
+      { label: 'Clean Desk', emoji: '🍵' },
     ],
+    poolTasks: [
+      { label: 'Take out the trash', emoji: '🗑️' },
+      { label: 'Vacuum the floors', emoji: '🧹' },
+      { label: 'Do the laundry', emoji: '👕' },
+      { label: 'Wipe down counters', emoji: '🧽' },
+      { label: 'Clean floor clutter', emoji: '👞' },
+      { label: 'Organize Closet', emoji: '🚪' },
+      { label: 'Cat Litter', emoji: '🐈' },
+    ],
+    pickCount: 2,
   },
   {
-    id: 2,
+    id: 'hygiene',
     label: 'Hygiene',
-    chores: [
-      { id: 6, label: 'Brush teeth' },
-      { id: 7, label: 'Shower' },
+    dailyTasks: [
+      { label: 'Brush teeth', emoji: '🪥' },
+      { label: 'Shower', emoji: '🚿' },
+      { label: 'Wash face', emoji: '🧴' },
+      { label: 'Deodorant', emoji: '🧼' },
     ],
+    poolTasks: [
+      { label: 'Floss', emoji: '🦷' },
+      { label: 'Moisturize', emoji: '🧴' },
+    ],
+    pickCount: 1,
+  },
+  {
+    id: 'fitness',
+    label: 'Fitness',
+    dailyTasks: [
+      { label: 'Morning stretch', emoji: '🧘' },
+      { label: '30 minute walk', emoji: '🏃' },
+    ],
+    poolTasks: [
+      { label: 'Push-ups', emoji: '💪' },
+      { label: 'Squats', emoji: '🦵' },
+      { label: 'Lunges', emoji: '🦵' },
+      { label: 'Plank', emoji: '😤' },
+      { label: 'Burpees', emoji: '🔥' },
+      { label: 'Mountain climbers', emoji: '🧗' },
+      { label: 'Jump squats', emoji: '⬆️' },
+      { label: 'Tricep dips', emoji: '💪' },
+      { label: 'Crunches', emoji: '🎯' },
+      { label: 'Leg raises', emoji: '🦵' },
+    ],
+    pickCount: 2,
+  },
+  {
+    id: 'mental',
+    label: 'Mental Exercises',
+    dailyTasks: [{ label: 'Read for 30 minutes', emoji: '📖' }],
+    poolTasks: [
+      { label: 'Do a crossword puzzle', emoji: '✏️' },
+      { label: 'Play a game of chess', emoji: '♟️' },
+      { label: 'Solve a sudoku', emoji: '🔢' },
+      { label: 'Draw something', emoji: '📝' },
+      { label: 'Expand your vocabulary', emoji: '💭' },
+      { label: 'Watch an educational video', emoji: '🎓' },
+    ],
+    pickCount: 2,
   },
 ];
 
