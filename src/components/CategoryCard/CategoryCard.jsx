@@ -1,5 +1,6 @@
-import ChoreItem from './ChoreItem';
-import { pickFromPool, dateSeed } from '../seedRandom';
+import './CategoryCard.css';
+import ChoreItem from '../ChoreItem/ChoreItem';
+import { pickFromPool, dateSeed } from '../../seedRandom';
 
 const seed = dateSeed();
 function getTasksForCategory(category) {
@@ -29,8 +30,9 @@ function CategoryCard({
         onClick={() => onToggleExpanded(category.id)}
       >
         <h1>{category.label}</h1>
+        <span className={`chevron ${expanded ? 'expanded' : ''}`}>&#8964;</span>
       </div>
-      {expanded && (
+      <div className={`card-body ${expanded ? 'expanded' : ''}`}>
         <ul>
           {tasks.map((task) => (
             <ChoreItem
@@ -42,7 +44,7 @@ function CategoryCard({
             />
           ))}
         </ul>
-      )}
+      </div>
     </div>
   );
 }

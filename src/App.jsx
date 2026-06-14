@@ -1,6 +1,7 @@
 import './App.css';
 import { useState } from 'react';
-import CategoryCard from './components/CategoryCard';
+import CategoryCard from './components/CategoryCard/CategoryCard';
+import Header from './components/Header/Header';
 
 import CATEGORIES from './chores';
 
@@ -26,18 +27,22 @@ function App() {
   };
 
   return (
-    <div className='app'>
-      {CATEGORIES.map((category) => (
-        <CategoryCard
-          key={category.id}
-          category={category}
-          expanded={expandedIds.has(category.id)}
-          checkedIds={checkedIds}
-          onToggle={toggle}
-          onToggleExpanded={toggleExpanded}
-        />
-      ))}
-    </div>
+    <>
+      <Header />
+
+      <div className='app'>
+        {CATEGORIES.map((category) => (
+          <CategoryCard
+            key={category.id}
+            category={category}
+            expanded={expandedIds.has(category.id)}
+            checkedIds={checkedIds}
+            onToggle={toggle}
+            onToggleExpanded={toggleExpanded}
+          />
+        ))}
+      </div>
+    </>
   );
 }
 
