@@ -1,4 +1,4 @@
-import './CategoryCard.css';
+import './CategoryCard.scss';
 import ChoreItem from '../ChoreItem/ChoreItem';
 import { pickFromPool, dateSeed } from '../../seedRandom';
 

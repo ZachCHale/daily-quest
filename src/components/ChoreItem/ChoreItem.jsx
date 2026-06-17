@@ -1,4 +1,4 @@
-import './ChoreItem.css';
+import './ChoreItem.scss';
 
 function ChoreItem({ id, chore, checked, onToggle }) {
   return (

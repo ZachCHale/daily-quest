@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { useState } from 'react';
 import CategoryCard from './components/CategoryCard/CategoryCard';
 import Header from './components/Header/Header';

@@ -1,3 +1,5 @@
+@use '../../styles/mixins' as *;
+
 .card {
   width: 100%;
   max-width: 480px;
@@ -5,6 +7,9 @@
   border: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  @include tablet {
+    max-width: none;
+  }
 }
 
 .card-body {
@@ -24,6 +29,9 @@
   background-color: #2563eb;
   cursor: pointer;
   padding: 1rem 1.5rem;
+  @include tablet {
+    padding: 2rem 1.5rem;
+  }
 }
 
 .card-header:hover {
@@ -36,6 +44,9 @@
   font-weight: 600;
   letter-spacing: -0.01em;
   margin: 0;
+  @include tablet {
+    font-size: 1.5rem;
+  }
 }
 
 .chevron {
@@ -43,6 +54,9 @@
   font-size: 1.5rem;
   transition: transform 0.2s ease;
   transform: rotate(0deg);
+  @include tablet {
+    font-size: 2rem;
+  }
 }
 
 .chevron.expanded {
