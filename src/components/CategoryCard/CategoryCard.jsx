@@ -1,4 +1,4 @@
-import './CategoryCard.scss';
+import styles from './CategoryCard.module.scss';
 import ChoreItem from '../ChoreItem/ChoreItem';
 import { pickFromPool, dateSeed } from '../../seedRandom';
 
@@ -24,15 +24,19 @@ function CategoryCard({
   const tasks = getTasksForCategory(category);
 
   return (
-    <div className='card'>
+    <div className={styles.card}>
       <div
-        className='card-header'
+        className={styles.cardHeader}
         onClick={() => onToggleExpanded(category.id)}
       >
         <h1>{category.label}</h1>
-        <span className={`chevron ${expanded ? 'expanded' : ''}`}>&#8964;</span>
+        <span
+          className={`${styles.chevron} ${expanded ? styles.expanded : ''}`}
+        >
+          &#8964;
+        </span>
       </div>
-      <div className={`card-body ${expanded ? 'expanded' : ''}`}>
+      <div className={`${styles.cardBody} ${expanded ? styles.expanded : ''}`}>
         <ul>
           {tasks.map((task) => (
             <ChoreItem

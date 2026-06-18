@@ -1,13 +1,13 @@
-import './ChoreItem.scss';
+import styles from './ChoreItem.module.scss';
 
 function ChoreItem({ id, chore, checked, onToggle }) {
   return (
     <li
-      className={`chore-item ${checked ? 'checked' : ''}`}
+      className={`${styles.choreItem} ${checked ? styles.checked : ''}`}
       onClick={() => onToggle(id)}
     >
-      <span className='checkbox' />
-      <span className='chore-label'>
+      <span className={styles.checkbox} />
+      <span className={styles.choreLabel}>
         {chore.emoji} {chore.label}
       </span>
     </li>

@@ -12,17 +12,17 @@
   }
 }
 
-.card-body {
+.cardBody {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease;
 }
 
-.card-body.expanded {
+.cardBody.expanded {
   max-height: 500px;
 }
 
-.card-header {
+.cardHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,11 +34,11 @@
   }
 }
 
-.card-header:hover {
+.cardHeader:hover {
   background-color: #1d4ed8;
 }
 
-.card-header h1 {
+.cardHeader h1 {
   color: #ffffff;
   font-size: 1.1rem;
   font-weight: 600;

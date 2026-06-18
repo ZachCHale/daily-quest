@@ -1,7 +1,7 @@
-import './Header.scss';
+import styles from './Header.module.scss';
 function Header() {
   return (
-    <header className='header'>
+    <header className={styles.header}>
       <h1>Daily Quest</h1>
     </header>
   );
