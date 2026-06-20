@@ -51,14 +51,39 @@
 
 .chevron {
   color: #ffffff;
-  font-size: 1.5rem;
+  font-size: 1rem;
   transition: transform 0.2s ease;
   transform: rotate(0deg);
   @include tablet {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 }
 
 .chevron.expanded {
   transform: rotate(180deg);
+}
+
+.progress {
+  color: #ffffff;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.cardHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.complete {
+  background-color: #16a34a;
+
+  &:hover {
+    background-color: #15803d;
+  }
+}
+
+.checkmark {
+  color: #ffffff;
+  font-size: 0.9rem;
 }

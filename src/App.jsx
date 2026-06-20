@@ -1,14 +1,20 @@
 import './App.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { loadState, saveState } from './storage';
+
 import CategoryCard from './components/CategoryCard/CategoryCard';
 import Header from './components/Header/Header';
 
 import CATEGORIES from './chores';
 
 function App() {
-  const [checkedIds, setCheckedIds] = useState(new Set());
+  const [checkedIds, setCheckedIds] = useState(() => loadState() ?? new Set());
 
   const [expandedIds, setExpandedIds] = useState(new Set());
+
+  useEffect(() => {
+    saveState(checkedIds);
+  }, [checkedIds]);
 
   const toggleExpanded = (id) => {
     setExpandedIds((prev) => {

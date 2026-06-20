@@ -22,19 +22,29 @@ function CategoryCard({
   onToggleExpanded,
 }) {
   const tasks = getTasksForCategory(category);
+  const completedCount = tasks.filter((task) =>
+    checkedIds.has(`${category.id}-${task.label}`),
+  ).length;
+  const allComplete = completedCount === tasks.length;
 
   return (
     <div className={styles.card}>
       <div
-        className={styles.cardHeader}
+        className={`${styles.cardHeader} ${allComplete ? styles.complete : ''}`}
         onClick={() => onToggleExpanded(category.id)}
       >
         <h1>{category.label}</h1>
-        <span
-          className={`${styles.chevron} ${expanded ? styles.expanded : ''}`}
-        >
-          &#8964;
-        </span>
+        <div className={styles.cardHeaderRight}>
+          {allComplete && <span className={styles.checkmark}>✓</span>}
+          <span className={styles.progress}>
+            {completedCount}/{tasks.length}
+          </span>
+          <span
+            className={`${styles.chevron} ${expanded ? styles.expanded : ''}`}
+          >
+            ▼
+          </span>
+        </div>
       </div>
       <div className={`${styles.cardBody} ${expanded ? styles.expanded : ''}`}>
         <ul>
