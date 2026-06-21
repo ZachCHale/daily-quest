@@ -1,18 +1,7 @@
 import styles from './CategoryCard.module.scss';
 import ChoreItem from '../ChoreItem/ChoreItem';
-import { pickFromPool, dateSeed } from '../../seedRandom';
-
-const seed = dateSeed();
-function getTasksForCategory(category) {
-  return [
-    ...category.dailyTasks,
-    ...pickFromPool(
-      category.poolTasks,
-      category.pickCount,
-      seed + category.id.length,
-    ),
-  ];
-}
+import { getTasksForCategory } from '../../taskUtils';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function CategoryCard({
   category,
@@ -22,6 +11,14 @@ function CategoryCard({
   onToggleExpanded,
 }) {
   const tasks = getTasksForCategory(category);
+
+  const sortedTasks = tasks.slice().sort((a, b) => {
+    const aChecked = checkedIds.has(`${category.id}-${a.label}`);
+    const bChecked = checkedIds.has(`${category.id}-${b.label}`);
+    if (aChecked === bChecked) return 0;
+    return aChecked ? 1 : -1;
+  });
+
   const completedCount = tasks.filter((task) =>
     checkedIds.has(`${category.id}-${task.label}`),
   ).length;
@@ -48,15 +45,22 @@ function CategoryCard({
       </div>
       <div className={`${styles.cardBody} ${expanded ? styles.expanded : ''}`}>
         <ul>
-          {tasks.map((task) => (
-            <ChoreItem
-              key={`${category.id}-${task.label}`}
-              id={`${category.id}-${task.label}`}
-              chore={task}
-              checked={checkedIds.has(`${category.id}-${task.label}`)}
-              onToggle={onToggle}
-            />
-          ))}
+          <AnimatePresence>
+            {sortedTasks.map((task) => (
+              <motion.div
+                key={`${category.id}-${task.label}`}
+                layout
+                transition={{ duration: 0.3 }}
+              >
+                <ChoreItem
+                  id={`${category.id}-${task.label}`}
+                  chore={task}
+                  checked={checkedIds.has(`${category.id}-${task.label}`)}
+                  onToggle={onToggle}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </ul>
       </div>
     </div>
