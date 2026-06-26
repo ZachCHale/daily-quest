@@ -19,3 +19,15 @@ export function saveState(checkedIds) {
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
+
+const INVENTORY_KEY = 'daily-quest:inventory';
+
+export function loadInventory() {
+  const saved = localStorage.getItem(INVENTORY_KEY);
+  if (!saved) return {};
+  return JSON.parse(saved);
+}
+
+export function saveInventory(inventory) {
+  localStorage.setItem(INVENTORY_KEY, JSON.stringify(inventory));
+}

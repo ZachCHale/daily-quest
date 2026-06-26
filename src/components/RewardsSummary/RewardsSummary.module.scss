@@ -1,0 +1,28 @@
+.summary {
+  width: 100%;
+  max-width: 480px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem 1.5rem;
+}
+
+.title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.rewards {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.rewardItem {
+  font-size: 1rem;
+  color: #1a1a1a;
+}

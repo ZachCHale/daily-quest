@@ -2,6 +2,7 @@ import styles from './CategoryCard.module.scss';
 import ChoreItem from '../ChoreItem/ChoreItem';
 import { getTasksForCategory } from '../../taskUtils';
 import { motion, AnimatePresence } from 'framer-motion';
+import CURRENCIES from '../../data/currencies';
 
 function CategoryCard({
   category,
@@ -13,16 +14,21 @@ function CategoryCard({
   const tasks = getTasksForCategory(category);
 
   const sortedTasks = tasks.slice().sort((a, b) => {
-    const aChecked = checkedIds.has(`${category.id}-${a.label}`);
-    const bChecked = checkedIds.has(`${category.id}-${b.label}`);
+    const aChecked = checkedIds.has(a.id);
+    const bChecked = checkedIds.has(b.id);
     if (aChecked === bChecked) return 0;
     return aChecked ? 1 : -1;
   });
 
-  const completedCount = tasks.filter((task) =>
-    checkedIds.has(`${category.id}-${task.label}`),
-  ).length;
+  const completedCount = tasks.filter((task) => checkedIds.has(task.id)).length;
   const allComplete = completedCount === tasks.length;
+
+  const earnedRewards = sortedTasks
+    .filter((task) => checkedIds.has(task.id))
+    .reduce((acc, task) => {
+      acc[task.reward] = (acc[task.reward] || 0) + 1;
+      return acc;
+    }, {});
 
   return (
     <div className={styles.card}>
@@ -32,7 +38,6 @@ function CategoryCard({
       >
         <h1>{category.label}</h1>
         <div className={styles.cardHeaderRight}>
-          {allComplete && <span className={styles.checkmark}>✓</span>}
           <span className={styles.progress}>
             {completedCount}/{tasks.length}
           </span>
@@ -45,24 +50,41 @@ function CategoryCard({
       </div>
       <div className={`${styles.cardBody} ${expanded ? styles.expanded : ''}`}>
         <ul>
-          <AnimatePresence>
-            {sortedTasks.map((task) => (
-              <motion.div
-                key={`${category.id}-${task.label}`}
-                layout
-                transition={{ duration: 0.3 }}
-              >
-                <ChoreItem
-                  id={`${category.id}-${task.label}`}
-                  chore={task}
-                  checked={checkedIds.has(`${category.id}-${task.label}`)}
-                  onToggle={onToggle}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+          {sortedTasks.map((task) => (
+            <ChoreItem
+              key={task.id}
+              id={task.id}
+              chore={task}
+              checked={checkedIds.has(task.id)}
+              onToggle={(id) => onToggle(id, task)}
+            />
+          ))}
         </ul>
       </div>
+      {Object.keys(earnedRewards).length > 0 && (
+        <div
+          className={`${styles.cardFooter} ${allComplete ? styles.cardFooterComplete : ''}`}
+        >
+          <div className={styles.earnedRewards}>
+            {Object.entries(earnedRewards).map(([key, amount]) => (
+              <span key={key} className={styles.rewardItem}>
+                {CURRENCIES[key].emoji} {allComplete ? amount * 2 : amount}
+              </span>
+            ))}
+          </div>
+          <div
+            className={`${styles.bonusSection} ${allComplete ? styles.bonusSectionComplete : ''}`}
+          >
+            <p
+              className={`${styles.bonusMessage} ${allComplete ? styles.bonusMessageActive : ''}`}
+            >
+              {allComplete
+                ? 'Category Complete! You Earned 2X Rewards'
+                : 'Category Incomplete. Complete All Tasks For A 2X Bonus!'}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

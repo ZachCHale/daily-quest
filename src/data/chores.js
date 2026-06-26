@@ -2,6 +2,7 @@ const CATEGORIES = [
   {
     id: 'morning-chores',
     label: 'Morning Chores',
+    rewards: ['gold'],
     dailyTasks: [
       { label: 'Make the bed', emoji: '🛏️' },
       { label: 'Wash the dishes', emoji: '🍽️' },
@@ -21,6 +22,7 @@ const CATEGORIES = [
   {
     id: 'hygiene',
     label: 'Hygiene',
+    rewards: ['gold', 'health-potion', 'barter-token'],
     dailyTasks: [
       { label: 'Brush teeth', emoji: '🪥' },
       { label: 'Shower', emoji: '🚿' },
@@ -36,6 +38,7 @@ const CATEGORIES = [
   {
     id: 'fitness',
     label: 'Fitness',
+    rewards: ['gold', 'travel-ticket', 'stamina-potion'],
     dailyTasks: [
       { label: 'Morning stretch', emoji: '🧘' },
       { label: '30 minute walk', emoji: '🏃' },
@@ -57,6 +60,7 @@ const CATEGORIES = [
   {
     id: 'mental',
     label: 'Mental Exercises',
+    rewards: ['gold', 'mana-potion', 'field-report'],
     dailyTasks: [{ label: 'Read for 30 minutes', emoji: '📖' }],
     poolTasks: [
       { label: 'Do a crossword puzzle', emoji: '✏️' },
