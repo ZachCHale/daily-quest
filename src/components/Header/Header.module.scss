@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  background-color: #2563eb;
+  background-color: var(--color-primary);
   padding: 0.75rem 2rem;
   display: flex;
   align-items: flex-end;
@@ -11,7 +11,7 @@
   font-size: 1.75rem;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: #ffffff;
+  color: var(--color-text-inverted);
 }
 
 .inventory {
@@ -21,6 +21,42 @@
 }
 
 .inventoryItem {
-  color: #ffffff;
+  color: var(--color-text-inverted);
   font-size: 1.1rem;
+}
+
+.toggleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggle {
+  width: 48px;
+  height: 26px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  padding: 3px;
+  transition: background-color var(--transition-fast);
+  display: flex;
+  align-items: center;
+}
+
+.toggleDark {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.knob {
+  width: 20px;
+  height: 20px;
+  background-color: var(--color-text-inverted);
+  border-radius: 50%;
+  transition: transform var(--transition-fast);
+  display: block;
+}
+
+.toggleDark .knob {
+  transform: translateX(22px);
 }

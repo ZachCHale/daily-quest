@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'daily-quest';
+const THEME_KEY = 'daily-quest:theme';
 
 export function loadState() {
   const saved = localStorage.getItem(STORAGE_KEY);
@@ -30,4 +31,12 @@ export function loadInventory() {
 
 export function saveInventory(inventory) {
   localStorage.setItem(INVENTORY_KEY, JSON.stringify(inventory));
+}
+
+export function loadTheme() {
+  return localStorage.getItem(THEME_KEY);
+}
+
+export function saveTheme(theme) {
+  localStorage.setItem(THEME_KEY, theme);
 }

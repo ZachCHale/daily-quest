@@ -5,8 +5,10 @@
   max-width: 480px;
   border-radius: 8px;
   border: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px var(--color-shadow);
+  border: 1px solid var(--color-card-border);
   overflow: hidden;
+
   @include tablet {
     max-width: none;
   }
@@ -26,7 +28,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #2563eb;
+  background-color: var(--color-primary);
   cursor: pointer;
   padding: 1rem 1.5rem;
   @include tablet {
@@ -35,11 +37,11 @@
 }
 
 .cardHeader:hover {
-  background-color: #1d4ed8;
+  background-color: var(--color-primary-hover);
 }
 
 .cardHeader h1 {
-  color: #ffffff;
+  color: var(--color-text-inverted);
   font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -50,7 +52,7 @@
 }
 
 .chevron {
-  color: #ffffff;
+  color: var(--color-text-inverted);
   font-size: 1rem;
   transition: transform 0.2s ease;
   transform: rotate(0deg);
@@ -64,7 +66,7 @@
 }
 
 .progress {
-  color: #ffffff;
+  color: var(--color-text-inverted);
   font-size: 0.9rem;
   opacity: 0.85;
 }
@@ -76,15 +78,15 @@
 }
 
 .complete {
-  background-color: #16a34a;
+  background-color: var(--color-success);
 
   &:hover {
-    background-color: #15803d;
+    background-color: var(--color-success-hover);
   }
 }
 
 .checkmark {
-  color: #ffffff;
+  color: var(--color-text-inverted);
   font-size: 0.9rem;
 }
 
@@ -92,7 +94,7 @@
   display: flex;
   flex-direction: column;
   padding: 0.5rem 1.5rem;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--color-border);
   gap: 0.25rem;
 }
 
@@ -103,44 +105,44 @@
 
 .rewardItem {
   font-size: 0.9rem;
-  color: #4b5563;
+  color: var(--color-reward-text);
 }
 
 .multiplier {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #d1d5db;
+  color: var(--color-border-muted);
 }
 
 .multiplierActive {
-  color: #16a34a;
+  color: var(--color-success);
 }
 
 .cardFooterComplete {
-  background-color: #f0fdf4;
-  border-top: 1px solid #bbf7d0;
+  background-color: var(--color-success-light);
+  border-top: 1px solid var(--color-success-border);
 }
 
 .cardFooterComplete .rewardItem {
-  color: #16a34a;
+  color: var(--color-success);
 }
 .bonusMessage {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: var(--color-text-faint);
   margin-top: 0.25rem;
 }
 
 .bonusMessageActive {
-  color: #16a34a;
+  color: var(--color-success);
   font-weight: 500;
 }
 
 .bonusSection {
   margin: 0.25rem -1.5rem -0.5rem -1.5rem;
   padding: 0.4rem 1.5rem;
-  background-color: #e5e7eb;
+  background-color: var(--color-surface-muted);
 }
 
 .bonusSectionComplete {
-  background-color: #dcfce7;
+  background-color: var(--color-success-muted);
 }

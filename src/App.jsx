@@ -1,6 +1,13 @@
 import './App.scss';
 import { useState, useEffect, useRef } from 'react';
-import { loadState, saveState, loadInventory, saveInventory } from './storage';
+import {
+  loadState,
+  saveState,
+  loadInventory,
+  saveInventory,
+  loadTheme,
+  saveTheme,
+} from './storage';
 import { getTasksForCategory } from './taskUtils';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -18,6 +25,23 @@ function App() {
   const prevCheckedIds = useRef(checkedIds);
 
   const [inventory, setInventory] = useState(() => loadInventory());
+
+  const [theme, setTheme] = useState(() => {
+    const saved = loadTheme();
+    if (saved) return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    saveTheme(theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   useEffect(() => {
     saveState(checkedIds);
@@ -104,7 +128,7 @@ function App() {
 
   return (
     <>
-      <Header inventory={inventory} />
+      <Header inventory={inventory} theme={theme} onToggleTheme={toggleTheme} />
       <div className='app'>
         <RewardsSummary totalEarnedRewards={totalEarnedRewards} />
         <AnimatePresence>
