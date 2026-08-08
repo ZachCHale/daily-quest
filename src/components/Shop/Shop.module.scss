@@ -1,0 +1,122 @@
+.shop {
+  width: 100%;
+  max-width: 480px;
+}
+
+.shopHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.balance {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--color-surface);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 8px var(--color-shadow);
+  border: 1px solid var(--color-card-border);
+}
+
+.itemEmoji {
+  font-size: 1.75rem;
+}
+
+.itemInfo {
+  flex: 1;
+}
+
+.itemLabel {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.itemCost {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.buyButton {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverted);
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color var(--transition-fast);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.pendingSection {
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.consumeButton {
+  background-color: var(--color-success);
+  color: var(--color-text-inverted);
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    background-color: var(--color-success-hover);
+  }
+}
+
+.refundButton {
+  background: none;
+  border: 1px solid var(--color-border-muted);
+  color: var(--color-text-muted);
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+
+  &:hover {
+    border-color: var(--color-text-muted);
+    color: var(--color-text);
+  }
+}

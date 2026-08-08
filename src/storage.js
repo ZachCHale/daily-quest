@@ -1,5 +1,6 @@
 const STORAGE_KEY = 'daily-quest';
 const THEME_KEY = 'daily-quest:theme';
+const PURCHASES_KEY = 'daily-quest:purchases';
 
 export function loadState() {
   const saved = localStorage.getItem(STORAGE_KEY);
@@ -39,4 +40,14 @@ export function loadTheme() {
 
 export function saveTheme(theme) {
   localStorage.setItem(THEME_KEY, theme);
+}
+
+export function loadPurchases() {
+  const saved = localStorage.getItem(PURCHASES_KEY);
+  if (!saved) return [];
+  return JSON.parse(saved);
+}
+
+export function savePurchases(purchases) {
+  localStorage.setItem(PURCHASES_KEY, JSON.stringify(purchases));
 }

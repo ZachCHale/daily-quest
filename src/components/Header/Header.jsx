@@ -1,7 +1,7 @@
 import CURRENCIES from '../../data/currencies';
 import styles from './Header.module.scss';
 
-function Header({ inventory, theme, onToggleTheme }) {
+function Header({ inventory, theme, onToggleTheme, currentPage, onNavigate }) {
   return (
     <header className={styles.header}>
       <h1>Daily Quest</h1>
@@ -11,6 +11,12 @@ function Header({ inventory, theme, onToggleTheme }) {
             {currency.emoji} {inventory?.[key] || 0}
           </span>
         ))}
+        <button
+          className={`${styles.navButton} ${currentPage === 'shop' ? styles.navButtonActive : ''}`}
+          onClick={() => onNavigate(currentPage === 'shop' ? 'home' : 'shop')}
+        >
+          🛒 Shop
+        </button>
       </div>
       <div className={styles.toggleWrapper}>
         <span>☀️</span>
