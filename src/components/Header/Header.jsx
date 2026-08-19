@@ -12,11 +12,11 @@ function Header({ inventory, theme, onToggleTheme, currentPage, onNavigate }) {
           </span>
         ))}
         <button
-          className={`${styles.navButton} ${currentPage === 'shop' ? styles.navButtonActive : ''}`}
-          onClick={() => onNavigate(currentPage === 'shop' ? 'home' : 'shop')}
-        >
-          🛒 Shop
-        </button>
+  className={styles.navButton}
+  onClick={() => onNavigate(currentPage === 'shop' ? 'home' : 'shop')}
+>
+  {currentPage === 'shop' ? '🏠 Home' : '🛒 Shop'}
+</button>
       </div>
       <div className={styles.toggleWrapper}>
         <span>☀️</span>
