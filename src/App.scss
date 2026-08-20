@@ -89,3 +89,63 @@ ul {
   width: 100%;
   max-width: 480px;
 }
+
+.navBar {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.coinDisplay {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.shopButton {
+  background: none;
+  border: 1px solid var(--color-border-muted);
+  color: var(--color-text);
+  border-radius: 6px;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    background-color: var(--color-surface-muted);
+  }
+}
+
+.pageTitle {
+  width: 100%;
+  max-width: 480px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.sectionTitle {
+  width: 100%;
+  max-width: 480px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}

@@ -1,28 +1,28 @@
 .summary {
-  width: 100%;
-  max-width: 480px;
   background-color: var(--color-surface);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 8px var(--color-shadow);
+  border: 1px solid var(--color-card-border);
+  padding: 0.4rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .title {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 0.5rem;
 }
 
 .rewards {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .rewardItem {
-  font-size: 1rem;
+  font-size: 0.85rem;
   color: var(--color-text);
 }

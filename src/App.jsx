@@ -72,7 +72,7 @@ function App() {
   };
 
   useEffect(() => {
-    sortedCategories.forEach((category) => {
+    CATEGORIES.forEach((category) => {
       const tasks = getTasksForCategory(category);
       const wasComplete = tasks.every((task) =>
         prevCheckedIds.current.has(task.id),
@@ -117,16 +117,17 @@ function App() {
     awardTaskRewards(task);
   };
 
-  const sortedCategories = CATEGORIES.slice().sort((a, b) => {
-    const tasks_a = getTasksForCategory(a);
-    const tasks_b = getTasksForCategory(b);
-    const aComplete = tasks_a.every((task) => checkedIds.has(task.id));
-    const bComplete = tasks_b.every((task) => checkedIds.has(task.id));
-    if (aComplete === bComplete) return 0;
-    return aComplete ? 1 : -1;
-  });
+const incompleteCategories = CATEGORIES.filter(category => {
+  const tasks = getTasksForCategory(category)
+  return !tasks.every(task => checkedIds.has(task.id))
+})
 
-  const totalEarnedRewards = sortedCategories.reduce((acc, category) => {
+const completeCategories = CATEGORIES.filter(category => {
+  const tasks = getTasksForCategory(category)
+  return tasks.every(task => checkedIds.has(task.id))
+})
+
+  const totalEarnedRewards = CATEGORIES.reduce((acc, category) => {
     const tasks = getTasksForCategory(category);
     const isComplete = tasks.every((task) => checkedIds.has(task.id));
     const multiplier = isComplete ? 2 : 1;
@@ -177,10 +178,28 @@ function App() {
         inventory={inventory}
         theme={theme}
         onToggleTheme={toggleTheme}
-        currentPage={currentPage}
-        onNavigate={setCurrentPage}
       />
       <div className='app'>
+        <div className='navBar'>
+  <div className='navLeft'>
+    <button
+      className='shopButton'
+      onClick={() => setCurrentPage(currentPage === 'shop' ? 'home' : 'shop')}
+    >
+      {currentPage === 'shop' ? '🏠 Home' : '🛒 Shop'}
+    </button>
+    {currentPage === 'home' && (
+      <span className='coinDisplay'>
+        🪙 {inventory?.coin || 0}
+      </span>
+    )}
+  </div>
+  <div className='navRight'>
+    {currentPage === 'home' && (
+      <RewardsSummary totalEarnedRewards={totalEarnedRewards} />
+    )}
+  </div>
+</div>
         {currentPage === 'shop' ? (
           <Shop
             inventory={inventory}
@@ -191,26 +210,55 @@ function App() {
           />
         ) : (
           <>
-            <RewardsSummary totalEarnedRewards={totalEarnedRewards} />
-            <AnimatePresence>
-              {sortedCategories.map((category) => (
-                <motion.div
-                  key={category.id}
-                  layout
-                  transition={{ duration: 0.3 }}
-                  className='categoryWrapper'
-                >
-                  <CategoryCard
-                    key={category.id}
-                    category={category}
-                    expanded={expandedIds.has(category.id)}
-                    checkedIds={checkedIds}
-                    onToggle={toggle}
-                    onToggleExpanded={toggleExpanded}
-                  />
-                </motion.div>
-              ))}
-            </AnimatePresence>
+            <h2 className='pageTitle'>Tasks</h2>
+{incompleteCategories.length > 0 && (
+  <>
+    <h3 className='sectionTitle'>Incomplete</h3>
+    <AnimatePresence>
+      {incompleteCategories.map((category) => (
+        <motion.div
+          key={category.id}
+          layout
+          transition={{ duration: 0.3 }}
+          className='categoryWrapper'
+        >
+          <CategoryCard
+            key={category.id}
+            category={category}
+            expanded={expandedIds.has(category.id)}
+            checkedIds={checkedIds}
+            onToggle={toggle}
+            onToggleExpanded={toggleExpanded}
+          />
+        </motion.div>
+      ))}
+    </AnimatePresence>
+  </>
+)}
+{completeCategories.length > 0 && (
+  <>
+    <h3 className='sectionTitle'>Complete</h3>
+    <AnimatePresence>
+      {completeCategories.map((category) => (
+        <motion.div
+          key={category.id}
+          layout
+          transition={{ duration: 0.3 }}
+          className='categoryWrapper'
+        >
+          <CategoryCard
+            key={category.id}
+            category={category}
+            expanded={expandedIds.has(category.id)}
+            checkedIds={checkedIds}
+            onToggle={toggle}
+            onToggleExpanded={toggleExpanded}
+          />
+        </motion.div>
+      ))}
+    </AnimatePresence>
+  </>
+)}
           </>
         )}
       </div>
