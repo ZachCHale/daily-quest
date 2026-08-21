@@ -175,7 +175,6 @@ const completeCategories = CATEGORIES.filter(category => {
   return (
     <>
       <Header
-        inventory={inventory}
         theme={theme}
         onToggleTheme={toggleTheme}
       />

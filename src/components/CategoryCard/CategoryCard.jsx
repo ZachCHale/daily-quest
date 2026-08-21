@@ -61,30 +61,30 @@ function CategoryCard({
           ))}
         </ul>
       </div>
-      {Object.keys(earnedRewards).length > 0 && (
-        <div
-          className={`${styles.cardFooter} ${allComplete ? styles.cardFooterComplete : ''}`}
-        >
-          <div className={styles.earnedRewards}>
-            {Object.entries(earnedRewards).map(([key, amount]) => (
-              <span key={key} className={styles.rewardItem}>
-                {CURRENCIES[key].emoji} {allComplete ? amount * 2 : amount}
-              </span>
-            ))}
-          </div>
-          <div
-            className={`${styles.bonusSection} ${allComplete ? styles.bonusSectionComplete : ''}`}
-          >
-            <p
-              className={`${styles.bonusMessage} ${allComplete ? styles.bonusMessageActive : ''}`}
-            >
-              {allComplete
-                ? 'Category Complete! You Earned 2X Rewards'
-                : 'Category Incomplete. Complete All Tasks For A 2X Bonus!'}
-            </p>
-          </div>
-        </div>
+  <div className={`${styles.cardFooter} ${allComplete ? styles.cardFooterComplete : ''}`}>
+    <div className={styles.earnedRewards}> 
+      {Object.entries(earnedRewards).length > 0 ? (
+        <div>
+          <span className={styles.rewardItem}>Rewards: </span>
+          {
+        Object.entries(earnedRewards).map(([key, amount]) => (
+          <span key={key} className={styles.rewardItem}>
+            {CURRENCIES[key].emoji} {allComplete ? amount * 2 : amount}
+          </span>
+        ))}</div>
+      ) : (
+        <span className={styles.rewardItem}>No rewards yet</span>
       )}
+    </div>
+    <div className={`${styles.bonusSection} ${allComplete ? styles.bonusSectionComplete : ''}`}>
+      <p className={`${styles.bonusMessage} ${allComplete ? styles.bonusMessageActive : ''}`}>
+        {allComplete
+          ? 'Category Complete: 2X bonus rewards earned!'
+          : 'Category Incomplete: Complete all tasks for 2X rewards!'}
+      </p>
+    </div>
+  </div>
+
     </div>
   );
 }

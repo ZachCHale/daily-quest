@@ -22,7 +22,7 @@
 
 .cardBody.expanded {
   max-height: 500px;
-    background-color: var(--color-surface);
+  background-color: var(--color-surface);
 
 }
 
@@ -128,6 +128,11 @@
 .cardFooterComplete .rewardItem {
   color: var(--color-success);
 }
+
+.cardFooterHidden {
+  display: none;
+}
+
 .bonusMessage {
   font-size: 0.8rem;
   color: var(--color-text-faint);
@@ -148,3 +153,4 @@
 .bonusSectionComplete {
   background-color: var(--color-success-muted);
 }
+
