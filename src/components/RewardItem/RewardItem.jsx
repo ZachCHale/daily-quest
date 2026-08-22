@@ -1,4 +1,4 @@
-import styles from './RewardItem.module.scss'
+import styles from './RewardItem.module.scss';
 
 function RewardItem({ item, purchase, onConsume, onRefund }) {
   return (
@@ -17,7 +17,7 @@ function RewardItem({ item, purchase, onConsume, onRefund }) {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default RewardItem
+export default RewardItem;

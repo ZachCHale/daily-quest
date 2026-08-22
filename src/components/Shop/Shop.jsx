@@ -1,10 +1,10 @@
-import ShopHeader from '../ShopHeader/ShopHeader'
-import RewardsSection from '../RewardsSection/RewardsSection'
-import ShopSection from '../ShopSection/ShopSection'
-import styles from './Shop.module.scss'
+import ShopHeader from '../ShopHeader/ShopHeader';
+import RewardsSection from '../RewardsSection/RewardsSection';
+import ShopSection from '../ShopSection/ShopSection';
+import styles from './Shop.module.scss';
 
 function Shop({ inventory, onPurchase, purchases, onConsume, onRefund }) {
-  const coins = inventory?.coin || 0
+  const coins = inventory?.coin || 0;
 
   return (
     <div className={styles.shop}>
@@ -14,12 +14,9 @@ function Shop({ inventory, onPurchase, purchases, onConsume, onRefund }) {
         onConsume={onConsume}
         onRefund={onRefund}
       />
-      <ShopSection
-        coins={coins}
-        onPurchase={onPurchase}
-      />
+      <ShopSection coins={coins} onPurchase={onPurchase} />
     </div>
-  )
+  );
 }
 
-export default Shop
+export default Shop;

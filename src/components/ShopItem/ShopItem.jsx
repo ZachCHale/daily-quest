@@ -1,4 +1,4 @@
-import styles from './ShopItem.module.scss'
+import styles from './ShopItem.module.scss';
 
 function ShopItem({ item, canAfford, onPurchase }) {
   return (
@@ -16,7 +16,7 @@ function ShopItem({ item, canAfford, onPurchase }) {
         Buy
       </button>
     </div>
-  )
+  );
 }
 
-export default ShopItem
+export default ShopItem;

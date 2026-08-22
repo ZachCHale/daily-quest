@@ -1,4 +1,4 @@
-import styles from './ShopHeader.module.scss'
+import styles from './ShopHeader.module.scss';
 
 function ShopHeader({ coins }) {
   return (
@@ -6,7 +6,7 @@ function ShopHeader({ coins }) {
       <h2 className={styles.title}>Shop</h2>
       <span className={styles.balance}>🪙 {coins} coins</span>
     </div>
-  )
+  );
 }
 
-export default ShopHeader
+export default ShopHeader;
