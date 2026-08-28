@@ -186,14 +186,9 @@ function App() {
             >
               {currentPage === 'shop' ? '🏠 Home' : '🛒 Shop'}
             </button>
-            {currentPage === 'home' && (
-              <span className='coinDisplay'>🪙 {inventory?.coin || 0}</span>
-            )}
           </div>
           <div className='navRight'>
-            {currentPage === 'home' && (
-              <RewardsSummary totalEarnedRewards={totalEarnedRewards} />
-            )}
+            <span className='coinDisplay'>🪙 {inventory?.coin || 0}</span>
           </div>
         </div>
         {currentPage === 'shop' ? (
@@ -206,7 +201,10 @@ function App() {
           />
         ) : (
           <>
-            <h2 className='pageTitle'>Tasks</h2>
+            <div className='pageTitleRow'>
+              <h2 className='pageTitle'>Tasks</h2>
+              <RewardsSummary totalEarnedRewards={totalEarnedRewards} />
+            </div>
             {incompleteCategories.length > 0 && (
               <>
                 <h3 className='sectionTitle'>Incomplete</h3>
