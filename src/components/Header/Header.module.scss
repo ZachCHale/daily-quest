@@ -1,21 +1,34 @@
 .header {
   width: 100%;
   background-color: var(--color-primary);
-  padding: 0.75rem 2rem 0.5rem 2rem;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  padding: 0.75rem 1rem 0.5rem 1rem;
   position: sticky;
   top: 0;
   z-index: 100;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.header h1 {
-  font-size: 1.75rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+.headerInner {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+}
+.coinDisplay {
   color: var(--color-text-inverted);
+  font-size: 1.25rem;
 }
 
 .inventory {
@@ -73,6 +86,22 @@
   padding: 0.25rem 0.75rem;
   cursor: pointer;
   font-size: 0.9rem;
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.themeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-inverted);
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  border-radius: 6px;
   transition: background-color var(--transition-fast);
 
   &:hover {

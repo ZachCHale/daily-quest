@@ -174,23 +174,14 @@ function App() {
 
   return (
     <>
-      <Header theme={theme} onToggleTheme={toggleTheme} />
+      <Header
+        inventory={inventory}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+        currentPage={currentPage}
+        onNavigate={setCurrentPage}
+      />
       <div className='app'>
-        <div className='navBar'>
-          <div className='navLeft'>
-            <button
-              className='shopButton'
-              onClick={() =>
-                setCurrentPage(currentPage === 'shop' ? 'home' : 'shop')
-              }
-            >
-              {currentPage === 'shop' ? '🏠 Home' : '🛒 Shop'}
-            </button>
-          </div>
-          <div className='navRight'>
-            <span className='coinDisplay'>🪙 {inventory?.coin || 0}</span>
-          </div>
-        </div>
         {currentPage === 'shop' ? (
           <Shop
             inventory={inventory}

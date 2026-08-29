@@ -1,20 +1,31 @@
-import CURRENCIES from '../../data/currencies';
+import StorefrontIcon from '@mui/icons-material/ShoppingCart';
+import HomeIcon from '@mui/icons-material/Home';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import styles from './Header.module.scss';
 
 function Header({ inventory, theme, onToggleTheme, currentPage, onNavigate }) {
   return (
     <header className={styles.header}>
-      <h1>Daily Quest</h1>
-      <div className={styles.toggleWrapper}>
-        <span>☀️</span>
-        <button
-          className={`${styles.toggle} ${theme === 'dark' ? styles.toggleDark : ''}`}
-          onClick={onToggleTheme}
-          aria-label='Toggle dark mode'
-        >
-          <span className={styles.knob} />
-        </button>
-        <span>🌙</span>
+      <div className={styles.headerInner}>
+        <div className={styles.left}>
+          <button
+            className={styles.navButton}
+            onClick={() => onNavigate(currentPage === 'shop' ? 'home' : 'shop')}
+          >
+            {currentPage === 'shop' ? <HomeIcon /> : <StorefrontIcon />}
+          </button>
+          <button
+            className={styles.themeButton}
+            onClick={onToggleTheme}
+            aria-label='Toggle dark mode'
+          >
+            {theme === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+          </button>
+        </div>
+        <div className={styles.right}>
+          <span className={styles.coinDisplay}>{inventory?.coin || 0} 🪙</span>
+        </div>
       </div>
     </header>
   );
