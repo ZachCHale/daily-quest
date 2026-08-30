@@ -10,6 +10,8 @@ import {
   loadPurchases,
   savePurchases,
 } from './storage';
+import { loadProfiles, saveProfiles } from './storage';
+import { DEFAULT_PROFILE } from './data/profiles';
 import { getTasksForCategory } from './taskUtils';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -17,25 +19,35 @@ import CategoryCard from './components/CategoryCard/CategoryCard';
 import Header from './components/Header/Header';
 import RewardsSummary from './components/RewardsSummary/RewardsSummary';
 import Shop from './components/Shop/Shop';
+import ProfilePage from './components/ProfilePage/ProfilePage';
 
 import CATEGORIES from './data/chores';
 import SHOP_ITEMS from './data/shopItems';
 
 function App() {
-  const [checkedIds, setCheckedIds] = useState(() => loadState() ?? new Set());
+  const [profiles, setProfiles] = useState(() => loadProfiles());
+  const [activeProfile, setActiveProfile] = useState(() => loadProfiles()[0]);
+
+  const [checkedIds, setCheckedIds] = useState(
+    () => loadState(activeProfile.id) ?? new Set(),
+  );
 
   const [expandedIds, setExpandedIds] = useState(new Set());
 
   const prevCheckedIds = useRef(checkedIds);
 
-  const [inventory, setInventory] = useState(() => loadInventory());
+  const [inventory, setInventory] = useState(() =>
+    loadInventory(activeProfile.id),
+  );
 
   const [currentPage, setCurrentPage] = useState('home');
 
-  const [purchases, setPurchases] = useState(() => loadPurchases());
+  const [purchases, setPurchases] = useState(() =>
+    loadPurchases(activeProfile.id),
+  );
 
   useEffect(() => {
-    savePurchases(purchases);
+    savePurchases(purchases, activeProfile.id);
   }, [purchases]);
 
   const [theme, setTheme] = useState(() => {
@@ -56,11 +68,11 @@ function App() {
   };
 
   useEffect(() => {
-    saveState(checkedIds);
+    saveState(checkedIds, activeProfile.id);
   }, [checkedIds]);
 
   useEffect(() => {
-    saveInventory(inventory);
+    saveInventory(inventory, activeProfile.id);
   }, [inventory]);
 
   const awardTaskRewards = (task) => {
@@ -172,6 +184,14 @@ function App() {
     setPurchases((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const handleSelectProfile = (profile) => {
+    setActiveProfile(profile);
+    setCheckedIds(loadState(profile.id) ?? new Set());
+    setInventory(loadInventory(profile.id));
+    setPurchases(loadPurchases(profile.id));
+    setCurrentPage('home');
+  };
+
   return (
     <>
       <Header
@@ -180,9 +200,16 @@ function App() {
         onToggleTheme={toggleTheme}
         currentPage={currentPage}
         onNavigate={setCurrentPage}
+        activeProfile={activeProfile}
       />
       <div className='app'>
-        {currentPage === 'shop' ? (
+        {currentPage === 'profiles' ? (
+          <ProfilePage
+            profiles={profiles}
+            activeProfile={activeProfile}
+            onSelectProfile={handleSelectProfile}
+          />
+        ) : currentPage === 'shop' ? (
           <Shop
             inventory={inventory}
             onPurchase={handlePurchase}

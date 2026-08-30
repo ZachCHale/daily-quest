@@ -1,0 +1,52 @@
+.page {
+  width: 100%;
+  max-width: 480px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+}
+
+.profiles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-surface);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 8px var(--color-shadow);
+  border: 1px solid var(--color-card-border);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    background-color: var(--color-surface-muted);
+  }
+}
+
+.active {
+  border: 1px solid var(--color-primary);
+}
+
+.profileLabel {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.activeBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
