@@ -1,4 +1,4 @@
-const SHOP_ITEMS = [
+export const SHOP_ITEMS = [
   {
     id: 'eat-out',
     label: 'Eat Out',
@@ -24,5 +24,3 @@ const SHOP_ITEMS = [
     cost: 30,
   },
 ];
-
-export default SHOP_ITEMS;

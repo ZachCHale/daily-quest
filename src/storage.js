@@ -69,6 +69,24 @@ export function loadProfiles() {
       id: 'test-profile',
       label: 'Test Profile',
       editable: true,
+      categories: [
+        {
+          id: 'test-category',
+          label: 'Test Category',
+          rewards: ['coin'],
+          pickCount: 1,
+          dailyTasks: [{ label: 'Test Task', emoji: '🧪' }],
+          poolTasks: [{ label: 'Test Pool Task', emoji: '🔬' }],
+        },
+      ],
+      shopItems: [
+        {
+          id: 'test-item',
+          label: 'Test Shop Item',
+          emoji: '🎁',
+          cost: 1,
+        },
+      ],
     });
   }
 

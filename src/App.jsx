@@ -21,12 +21,16 @@ import RewardsSummary from './components/RewardsSummary/RewardsSummary';
 import Shop from './components/Shop/Shop';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 
-import CATEGORIES from './data/chores';
-import SHOP_ITEMS from './data/shopItems';
+import { DEFAULT_PROFILE_DATA } from './data/defaultProfile';
 
 function App() {
   const [profiles, setProfiles] = useState(() => loadProfiles());
   const [activeProfile, setActiveProfile] = useState(() => loadProfiles()[0]);
+
+  const activeCategories =
+    activeProfile.categories ?? DEFAULT_PROFILE_DATA.categories;
+  const activeShopItems =
+    activeProfile.shopItems ?? DEFAULT_PROFILE_DATA.shopItems;
 
   const [checkedIds, setCheckedIds] = useState(
     () => loadState(activeProfile.id) ?? new Set(),
@@ -84,7 +88,7 @@ function App() {
   };
 
   useEffect(() => {
-    CATEGORIES.forEach((category) => {
+    activeCategories.forEach((category) => {
       const tasks = getTasksForCategory(category);
       const wasComplete = tasks.every((task) =>
         prevCheckedIds.current.has(task.id),
@@ -129,17 +133,17 @@ function App() {
     awardTaskRewards(task);
   };
 
-  const incompleteCategories = CATEGORIES.filter((category) => {
+  const incompleteCategories = activeCategories.filter((category) => {
     const tasks = getTasksForCategory(category);
     return !tasks.every((task) => checkedIds.has(task.id));
   });
 
-  const completeCategories = CATEGORIES.filter((category) => {
+  const completeCategories = activeCategories.filter((category) => {
     const tasks = getTasksForCategory(category);
     return tasks.every((task) => checkedIds.has(task.id));
   });
 
-  const totalEarnedRewards = CATEGORIES.reduce((acc, category) => {
+  const totalEarnedRewards = activeCategories.reduce((acc, category) => {
     const tasks = getTasksForCategory(category);
     const isComplete = tasks.every((task) => checkedIds.has(task.id));
     const multiplier = isComplete ? 2 : 1;
@@ -161,27 +165,29 @@ function App() {
       ...prev,
       {
         id: item.id,
+        purchaseId: crypto.randomUUID(),
         purchasedAt: new Date().toLocaleDateString(),
         consumed: false,
       },
     ]);
   };
-
-  const handleConsume = (index) => {
+  const handleConsume = (purchaseId) => {
     setPurchases((prev) =>
-      prev.map((p, i) => (i === index ? { ...p, consumed: true } : p)),
+      prev.map((p) =>
+        p.purchaseId === purchaseId ? { ...p, consumed: true } : p,
+      ),
     );
   };
 
-  const handleRefund = (index) => {
-    const purchase = purchases[index];
-    const item = SHOP_ITEMS.find((i) => i.id === purchase.id);
+  const handleRefund = (purchaseId) => {
+    const purchase = purchases.find((p) => p.purchaseId === purchaseId);
+    const item = activeShopItems.find((i) => i.id === purchase.id);
     setInventory((prev) => {
       const next = { ...prev };
       next.coin = (next.coin || 0) + item.cost;
       return next;
     });
-    setPurchases((prev) => prev.filter((_, i) => i !== index));
+    setPurchases((prev) => prev.filter((p) => p.purchaseId !== purchaseId));
   };
 
   const handleSelectProfile = (profile) => {
@@ -216,6 +222,7 @@ function App() {
             purchases={purchases}
             onConsume={handleConsume}
             onRefund={handleRefund}
+            shopItems={activeShopItems}
           />
         ) : (
           <>

@@ -1,4 +1,4 @@
-const CATEGORIES = [
+export const CATEGORIES = [
   {
     id: 'morning-chores',
     label: 'Morning Chores',
@@ -73,5 +73,3 @@ const CATEGORIES = [
     pickCount: 2,
   },
 ];
-
-export default CATEGORIES;

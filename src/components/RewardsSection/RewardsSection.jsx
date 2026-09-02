@@ -1,8 +1,8 @@
-import SHOP_ITEMS from '../../data/shopItems';
+import { SHOP_ITEMS } from '../../data/shopItems';
 import RewardItem from '../RewardItem/RewardItem';
 import styles from './RewardsSection.module.scss';
 
-function RewardsSection({ purchases, onConsume, onRefund }) {
+function RewardsSection({ purchases, onConsume, onRefund, shopItems }) {
   const pendingPurchases = purchases.filter((p) => !p.consumed);
 
   if (pendingPurchases.length === 0) return null;
@@ -11,18 +11,15 @@ function RewardsSection({ purchases, onConsume, onRefund }) {
     <div className={styles.section}>
       <h3 className={styles.sectionTitle}>Pending Rewards</h3>
       <div className={styles.items}>
-        {pendingPurchases.map((purchase, index) => {
-          const item = SHOP_ITEMS.find((i) => i.id === purchase.id);
-          return (
-            <RewardItem
-              key={index}
-              item={item}
-              purchase={purchase}
-              onConsume={() => onConsume(index)}
-              onRefund={() => onRefund(index)}
-            />
-          );
-        })}
+        {pendingPurchases.map((purchase) => (
+          <RewardItem
+            key={purchase.purchaseId}
+            item={shopItems.find((i) => i.id === purchase.id)}
+            purchase={purchase}
+            onConsume={() => onConsume(purchase.purchaseId)}
+            onRefund={() => onRefund(purchase.purchaseId)}
+          />
+        ))}
       </div>
     </div>
   );
