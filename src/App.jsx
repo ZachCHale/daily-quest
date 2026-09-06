@@ -195,7 +195,110 @@ function App() {
     setCheckedIds(loadState(profile.id) ?? new Set());
     setInventory(loadInventory(profile.id));
     setPurchases(loadPurchases(profile.id));
-    setCurrentPage('home');
+  };
+
+  const handleCreateProfile = (name) => {
+    const newProfile = {
+      id: crypto.randomUUID(),
+      label: name,
+      editable: true,
+      categories: null,
+      shopItems: null,
+    };
+    const updatedProfiles = [...profiles, newProfile];
+    setProfiles(updatedProfiles);
+    saveProfiles(updatedProfiles);
+  };
+
+  const handleDeleteProfile = (profile) => {
+    const updatedProfiles = profiles.filter((p) => p.id !== profile.id);
+    setProfiles(updatedProfiles);
+    saveProfiles(updatedProfiles);
+    if (activeProfile.id === profile.id) {
+      handleSelectProfile(updatedProfiles[0]);
+    }
+  };
+
+  const handleEditProfile = (profile) => {
+    if (profile.categories === null) {
+      const updatedProfile = {
+        ...profile,
+        categories: DEFAULT_PROFILE_DATA.categories,
+        shopItems: DEFAULT_PROFILE_DATA.shopItems,
+      };
+      const updatedProfiles = profiles.map((p) =>
+        p.id === profile.id ? updatedProfile : p,
+      );
+      setProfiles(updatedProfiles);
+      saveProfiles(updatedProfiles);
+      if (activeProfile.id === profile.id) {
+        setActiveProfile(updatedProfile);
+      }
+    }
+  };
+
+  const handleAddCategory = (profile) => {
+    const newCategory = {
+      id: crypto.randomUUID(),
+      label: 'New Category',
+      rewards: ['coin'],
+      pickCount: 1,
+      dailyTasks: [],
+      poolTasks: [],
+    };
+    const updatedProfile = {
+      ...profile,
+      categories: [
+        ...(profile.categories ?? DEFAULT_PROFILE_DATA.categories),
+        newCategory,
+      ],
+    };
+    updateProfile(updatedProfile);
+  };
+
+  const handleUpdateCategory = (profile, categoryIndex, updatedCategory) => {
+    const updatedCategories = profile.categories.map((c, i) =>
+      i === categoryIndex ? updatedCategory : c,
+    );
+    updateProfile({ ...profile, categories: updatedCategories });
+  };
+
+  const handleAddTask = (profile, categoryIndex) => {
+    const newTask = { label: 'New Task', emoji: '⭐' };
+    const updatedCategories = profile.categories.map((c, i) => {
+      if (i !== categoryIndex) return c;
+      return { ...c, dailyTasks: [...c.dailyTasks, newTask] };
+    });
+    updateProfile({ ...profile, categories: updatedCategories });
+  };
+
+  const handleUpdateTask = (profile, categoryIndex, taskIndex, updatedTask) => {
+    const updatedCategories = profile.categories.map((c, i) => {
+      if (i !== categoryIndex) return c;
+      return {
+        ...c,
+        dailyTasks: c.dailyTasks.map((t, j) =>
+          j === taskIndex ? updatedTask : t,
+        ),
+      };
+    });
+    updateProfile({ ...profile, categories: updatedCategories });
+  };
+
+  const handleSaveProfile = (profile) => {
+    updateProfile(profile);
+    // close editor
+  };
+
+  const updateProfile = (updatedProfile) => {
+    const updatedProfiles = profiles.map((p) =>
+      p.id === updatedProfile.id ? updatedProfile : p,
+    );
+    setProfiles(updatedProfiles);
+    saveProfiles(updatedProfiles);
+    if (activeProfile.id === updatedProfile.id) {
+      setActiveProfile(updatedProfile);
+    }
   };
 
   return (
@@ -214,6 +317,14 @@ function App() {
             profiles={profiles}
             activeProfile={activeProfile}
             onSelectProfile={handleSelectProfile}
+            onCreateProfile={handleCreateProfile}
+            onDeleteProfile={handleDeleteProfile}
+            onEditProfile={handleEditProfile}
+            onAddCategory={handleAddCategory}
+            onUpdateCategory={handleUpdateCategory}
+            onAddTask={handleAddTask}
+            onUpdateTask={handleUpdateTask}
+            onSaveProfile={handleSaveProfile}
           />
         ) : currentPage === 'shop' ? (
           <Shop

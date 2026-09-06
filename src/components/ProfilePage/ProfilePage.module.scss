@@ -18,8 +18,7 @@
 
 .profile {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   background-color: var(--color-surface);
   border-radius: 8px;
   padding: 1rem 1.5rem;
@@ -31,6 +30,18 @@
   &:hover {
     background-color: var(--color-surface-muted);
   }
+}
+
+.profileTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editor {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
 }
 
 .active {
@@ -49,4 +60,158 @@
   color: var(--color-primary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.createProfile {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--color-border-muted);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  outline: none;
+
+  &:focus {
+    border-color: var(--color-primary);
+  }
+}
+
+.createButton {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverted);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    background-color: var(--color-primary-hover);
+  }
+}
+
+.profileActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-faint);
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: #ef4444;
+  }
+}
+
+.profileWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.editButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-faint);
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+.editorHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.editorTitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+
+.categoryEditor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+}
+
+.categoryHeader {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.taskEditor {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.addButton {
+  background: none;
+  border: 1px solid var(--color-border-muted);
+  color: var(--color-text-muted);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+}
+
+.saveButton {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverted);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  transition: background-color var(--transition-fast);
+  width: 100%;
+
+  &:hover {
+    background-color: var(--color-primary-hover);
+  }
 }
