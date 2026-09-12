@@ -177,6 +177,7 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  margin-left: 1rem;
 }
 
 .addButton {
@@ -214,4 +215,81 @@
   &:hover {
     background-color: var(--color-primary-hover);
   }
+}
+.taskLabelInput {
+  width: 200px;
+  flex: none;
+}
+.spacer {
+  flex: 1;
+}
+
+.poolButton {
+  background: none;
+  border: 1px solid var(--color-border-muted);
+  color: var(--color-text-muted);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+}
+
+.poolActive {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.pickCountInput {
+  width: 50px;
+  flex: none;
+
+  /* remove spinner arrows */
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+.pickCountLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+.editorTabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.tabButton {
+  background: none;
+  border: 1px solid var(--color-border-muted);
+  color: var(--color-text-muted);
+  border-radius: 6px;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+}
+
+.tabActive {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background-color: var(--color-surface-muted);
 }

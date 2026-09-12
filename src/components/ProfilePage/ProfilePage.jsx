@@ -19,6 +19,7 @@ function ProfilePage({
   onSaveProfile,
 }) {
   const [newProfileName, setNewProfileName] = useState('');
+  const [editorTab, setEditorTab] = useState('tasks');
 
   const handleCreate = () => {
     if (!newProfileName.trim()) return;
@@ -31,13 +32,14 @@ function ProfilePage({
 
   const handleEditClick = (e, profile) => {
     e.stopPropagation();
-    onEditProfile(profile);
+    const resolvedProfile = onEditProfile(profile);
     if (editingProfileId === profile.id) {
       setEditingProfileId(null);
       setEditingProfile(null);
     } else {
       setEditingProfileId(profile.id);
-      setEditingProfile(JSON.parse(JSON.stringify(profile))); // deep copy
+      setEditingProfile(JSON.parse(JSON.stringify(resolvedProfile)));
+      setEditorTab('tasks');
     }
   };
 
@@ -60,8 +62,7 @@ function ProfilePage({
           label: 'New Category',
           rewards: ['coin'],
           pickCount: 1,
-          dailyTasks: [],
-          poolTasks: [],
+          tasks: [],
         },
       ],
     }));
@@ -74,7 +75,7 @@ function ProfilePage({
         if (i !== categoryIndex) return c;
         return {
           ...c,
-          dailyTasks: [...c.dailyTasks, { label: 'New Task', emoji: '⭐' }],
+          tasks: [...c.tasks, { label: 'New Task', tags: [] }],
         };
       }),
     }));
@@ -87,9 +88,7 @@ function ProfilePage({
         if (i !== categoryIndex) return c;
         return {
           ...c,
-          dailyTasks: c.dailyTasks.map((t, j) =>
-            j === taskIndex ? updatedTask : t,
-          ),
+          tasks: c.tasks.map((t, j) => (j === taskIndex ? updatedTask : t)),
         };
       }),
     }));
@@ -109,9 +108,35 @@ function ProfilePage({
         if (i !== categoryIndex) return c;
         return {
           ...c,
-          dailyTasks: c.dailyTasks.filter((_, j) => j !== taskIndex),
+          tasks: c.tasks.filter((_, j) => j !== taskIndex),
         };
       }),
+    }));
+  };
+
+  const handleLocalAddShopItem = () => {
+    setEditingProfile((prev) => ({
+      ...prev,
+      shopItems: [
+        ...prev.shopItems,
+        { id: crypto.randomUUID(), label: 'New Item', emoji: '⭐', cost: 10 },
+      ],
+    }));
+  };
+
+  const handleLocalUpdateShopItem = (itemIndex, updatedItem) => {
+    setEditingProfile((prev) => ({
+      ...prev,
+      shopItems: prev.shopItems.map((item, i) =>
+        i === itemIndex ? updatedItem : item,
+      ),
+    }));
+  };
+
+  const handleLocalDeleteShopItem = (itemIndex) => {
+    setEditingProfile((prev) => ({
+      ...prev,
+      shopItems: prev.shopItems.filter((_, i) => i !== itemIndex),
     }));
   };
 
@@ -159,88 +184,210 @@ function ProfilePage({
                   className={styles.editor}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className={styles.editorHeader}>
-                    <span className={styles.editorTitle}>Categories</span>
+                  <div className={styles.editorTabs}>
                     <button
-                      className={styles.addButton}
+                      className={`${styles.tabButton} ${editorTab === 'tasks' ? styles.tabActive : ''}`}
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleLocalAddCategory();
+                        setEditorTab('tasks');
                       }}
                     >
-                      <AddIcon fontSize='small' /> Add Category
+                      Tasks
+                    </button>
+                    <button
+                      className={`${styles.tabButton} ${editorTab === 'shop' ? styles.tabActive : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setEditorTab('shop');
+                      }}
+                    >
+                      Shop
                     </button>
                   </div>
-                  {editingProfile.categories.map((category, categoryIndex) => (
-                    <div key={category.id} className={styles.categoryEditor}>
-                      <div className={styles.categoryHeader}>
-                        <input
-                          className={styles.input}
-                          value={category.label}
-                          onChange={(e) =>
-                            handleLocalUpdateCategory(categoryIndex, {
-                              ...category,
-                              label: e.target.value,
-                            })
-                          }
-                          onClick={(e) => e.stopPropagation()}
-                        />
+                  {editorTab === 'tasks' && (
+                    <>
+                      <div className={styles.editorHeader}>
+                        <span className={styles.editorTitle}>Categories</span>
                         <button
                           className={styles.addButton}
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleLocalAddTask(categoryIndex);
+                            handleLocalAddCategory();
                           }}
                         >
-                          <AddIcon fontSize='small' />
-                        </button>
-                        <button
-                          className={styles.deleteButton}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleLocalDeleteCategory(categoryIndex);
-                          }}
-                        >
-                          <DeleteIcon fontSize='small' />
+                          <AddIcon fontSize='small' /> Add Category
                         </button>
                       </div>
-                      {category.dailyTasks.map((task, taskIndex) => (
-                        <div key={taskIndex} className={styles.taskEditor}>
+                      {editingProfile.categories.map(
+                        (category, categoryIndex) => (
+                          <div
+                            key={category.id}
+                            className={styles.categoryEditor}
+                          >
+                            <div className={styles.categoryHeader}>
+                              <input
+                                className={styles.input}
+                                value={category.label}
+                                onChange={(e) =>
+                                  handleLocalUpdateCategory(categoryIndex, {
+                                    ...category,
+                                    label: e.target.value,
+                                  })
+                                }
+                                onClick={(e) => e.stopPropagation()}
+                              />
+                              <label
+                                className={styles.pickCountLabel}
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                Pool Count:
+                                <input
+                                  type='number'
+                                  min={0}
+                                  className={`${styles.input} ${styles.pickCountInput}`}
+                                  value={category.pickCount}
+                                  onChange={(e) =>
+                                    handleLocalUpdateCategory(categoryIndex, {
+                                      ...category,
+                                      pickCount: Number(e.target.value),
+                                    })
+                                  }
+                                  onClick={(e) => e.stopPropagation()}
+                                />
+                              </label>
+                              <button
+                                className={styles.addButton}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleLocalAddTask(categoryIndex);
+                                }}
+                              >
+                                <AddIcon fontSize='small' />
+                              </button>
+                              <button
+                                className={styles.deleteButton}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleLocalDeleteCategory(categoryIndex);
+                                }}
+                              >
+                                <DeleteIcon fontSize='small' />
+                              </button>
+                            </div>
+                            {category.tasks.map((task, taskIndex) => (
+                              <div
+                                key={taskIndex}
+                                className={styles.taskEditor}
+                              >
+                                <input
+                                  className={`${styles.input} ${styles.taskLabelInput}`}
+                                  value={task.label}
+                                  onChange={(e) =>
+                                    handleLocalUpdateTask(
+                                      categoryIndex,
+                                      taskIndex,
+                                      {
+                                        ...task,
+                                        label: e.target.value,
+                                      },
+                                    )
+                                  }
+                                  onClick={(e) => e.stopPropagation()}
+                                />
+                                <div className={styles.spacer}></div>
+                                <button
+                                  className={`${styles.poolButton} ${task.tags.includes('pool') ? styles.poolActive : ''}`}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleLocalUpdateTask(
+                                      categoryIndex,
+                                      taskIndex,
+                                      {
+                                        ...task,
+                                        tags: task.tags.includes('pool')
+                                          ? task.tags.filter(
+                                              (t) => t !== 'pool',
+                                            )
+                                          : [...task.tags, 'pool'],
+                                      },
+                                    );
+                                  }}
+                                >
+                                  Pool: {task.tags.includes('pool') ? '✓' : '✗'}
+                                </button>
+                                <button
+                                  className={styles.deleteButton}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleLocalDeleteTask(
+                                      categoryIndex,
+                                      taskIndex,
+                                    );
+                                  }}
+                                >
+                                  <DeleteIcon fontSize='small' />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        ),
+                      )}
+                    </>
+                  )}
+                  {editorTab === 'shop' && (
+                    <>
+                      <div className={styles.editorHeader}>
+                        <span className={styles.editorTitle}>Shop Items</span>
+                        <button
+                          className={styles.addButton}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleLocalAddShopItem();
+                          }}
+                        >
+                          <AddIcon fontSize='small' /> Add Item
+                        </button>
+                      </div>
+                      {editingProfile.shopItems.map((item, itemIndex) => (
+                        <div key={item.id} className={styles.taskEditor}>
                           <input
-                            className={styles.input}
-                            value={task.emoji}
+                            className={`${styles.input} ${styles.taskLabelInput}`}
+                            value={item.label}
                             onChange={(e) =>
-                              handleLocalUpdateTask(categoryIndex, taskIndex, {
-                                ...task,
-                                emoji: e.target.value,
-                              })
-                            }
-                            onClick={(e) => e.stopPropagation()}
-                          />
-                          <input
-                            className={styles.input}
-                            value={task.label}
-                            onChange={(e) =>
-                              handleLocalUpdateTask(categoryIndex, taskIndex, {
-                                ...task,
+                              handleLocalUpdateShopItem(itemIndex, {
+                                ...item,
                                 label: e.target.value,
                               })
                             }
                             onClick={(e) => e.stopPropagation()}
                           />
+                          <input
+                            type='number'
+                            min={0}
+                            className={`${styles.input} ${styles.pickCountInput}`}
+                            value={item.cost}
+                            onChange={(e) =>
+                              handleLocalUpdateShopItem(itemIndex, {
+                                ...item,
+                                cost: Number(e.target.value),
+                              })
+                            }
+                            onClick={(e) => e.stopPropagation()}
+                          />
+                          <div className={styles.spacer}></div>
                           <button
                             className={styles.deleteButton}
                             onClick={(e) => {
                               e.stopPropagation();
-                              handleLocalDeleteTask(categoryIndex, taskIndex);
+                              handleLocalDeleteShopItem(itemIndex);
                             }}
                           >
                             <DeleteIcon fontSize='small' />
                           </button>
                         </div>
                       ))}
-                    </div>
-                  ))}
+                    </>
+                  )}
                   <button
                     className={styles.saveButton}
                     onClick={(e) => {

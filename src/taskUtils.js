@@ -9,21 +9,22 @@ function getTaskReward(category, task) {
 }
 
 export function getTasksForCategory(category) {
-  const daily = category.dailyTasks.map((task) => ({
+  const withRewards = (task) => ({
     ...task,
     id: `${category.id}-${task.label}`,
     reward: getTaskReward(category, task),
-  }));
+  });
 
-  const pooled = pickFromPool(
-    category.poolTasks,
-    category.pickCount,
+  const alwaysTasks = category.tasks.filter((t) => !t.tags.includes('pool'));
+  const poolTasks = category.tasks.filter((t) => t.tags.includes('pool'));
+
+  const effectivePickCount = Math.min(category.pickCount, poolTasks.length);
+
+  const picked = pickFromPool(
+    poolTasks,
+    effectivePickCount,
     seed + category.id.length,
-  ).map((task) => ({
-    ...task,
-    id: `${category.id}-${task.label}`,
-    reward: getTaskReward(category, task),
-  }));
+  );
 
-  return [...daily, ...pooled];
+  return [...alwaysTasks, ...picked].map(withRewards);
 }

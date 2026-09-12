@@ -234,7 +234,9 @@ function App() {
       if (activeProfile.id === profile.id) {
         setActiveProfile(updatedProfile);
       }
+      return updatedProfile;
     }
+    return profile;
   };
 
   const handleAddCategory = (profile) => {
@@ -299,6 +301,26 @@ function App() {
     if (activeProfile.id === updatedProfile.id) {
       setActiveProfile(updatedProfile);
     }
+  };
+
+  const handleLocalDeleteCategory = (categoryIndex) => {
+    setEditingProfile((prev) => ({
+      ...prev,
+      categories: prev.categories.filter((_, i) => i !== categoryIndex),
+    }));
+  };
+
+  const handleLocalDeleteTask = (categoryIndex, taskIndex) => {
+    setEditingProfile((prev) => ({
+      ...prev,
+      categories: prev.categories.map((c, i) => {
+        if (i !== categoryIndex) return c;
+        return {
+          ...c,
+          dailyTasks: c.dailyTasks.filter((_, j) => j !== taskIndex),
+        };
+      }),
+    }));
   };
 
   return (
